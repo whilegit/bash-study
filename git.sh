@@ -136,7 +136,8 @@ git stash clear
 # 恢复最近一次的stash，并删除该stash
 git stash pop 
 
-
+### 删除一个未经合并的分支
+git branch -D branch_id
 
 
 
