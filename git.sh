@@ -127,9 +127,14 @@ git stash list
 git stash apply
 # 恢复到指定一次的工作现场
 git stash apply stash@{n}
-# 删除stash
+# 删除最近一次的stash
 git stash drop
-
+# 删除指定一次的stash
+git stash drop stash@{n}
+# 清空stash
+git stash clear
+# 恢复最近一次的stash，并删除该stash
+git stash pop 
 
 
 
