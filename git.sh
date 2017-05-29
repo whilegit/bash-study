@@ -104,8 +104,10 @@ git branch
 ### 合并和删除分支
 # 合并
 git merge dev_branch_id
-# 删除
+# 删除dev
 git branch -d dev_branch_id
+
+### merge时冲突解决(from dev)
 
 
 
