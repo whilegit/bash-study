@@ -104,7 +104,7 @@ git branch
 ### 合并和删除分支
 # 合并
 git merge dev_branch_id
-# 禁用快速合并模式 Fast forward, 合并时将生成一个commit,以便追踪
+# 禁用快速合并模式 Fast forward, 合并时将生成一个commit,以便追踪。
 git merge --no-ff -m "加上--no-ff参数，表示禁止fast forward模式" dev
 # 删除(master)
 # 删除dev
