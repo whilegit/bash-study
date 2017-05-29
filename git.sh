@@ -91,8 +91,15 @@ git push origin master
 ### 从远程clone一个版本库repository
 git clone git@github.com/USER_NAME_XXX/GIT_NAME_XXX.git
 
-
-
+### 创建分支
+# 创建一个新的分支
+git branch dev_branch_id
+# 检出并切换到分支
+git checkout dev
+# 创建新分支并切换到该新分支,相当于前两个命令的组合
+git checkout -b dev
+# 检查当前分支(列出所有的分支名，并标注当前所在的分支)
+git branch
 
 
 
