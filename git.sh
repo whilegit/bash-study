@@ -88,6 +88,10 @@ git push -u origin master
 # 常规推送
 git push origin master
 
+### 从远程clone一个版本库repository
+git clone git@github.com/USER_NAME_XXX/GIT_NAME_XXX.git
+
+
 
 
 
