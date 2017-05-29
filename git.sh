@@ -79,6 +79,14 @@ git rm file-name
 ### 生成rsa密钥对，应用于github.com的提交者确认
 ssh-keygen -t rsa -C "6215714@qq.com"
 
+### 关联远程仓库
+git remote add origin git@github.com/USER_NAME_XXX/GIT_NAME_XXX.git
+
+### 将本地库的内容推送到远程仓库
+# 第一次推送,master的所有内容
+git push -u origin master
+# 常规推送
+git put origin master
 
 
 
