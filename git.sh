@@ -118,6 +118,18 @@ git commit -m "some message"
 # 查看分支图
 git log --graph --pretty=oneline --abbrev-commit
 
+### 现场保护和切换
+# 工作现场保护,切换上最近一次提交时的状态
+git stash
+# 查看stash列表
+git stash list
+# 恢复最近一次的工作现场
+git stash apply
+# 恢复到指定一次的工作现场
+git stash apply stash@{n}
+# 删除stash
+git stash drop
+
 
 
 
