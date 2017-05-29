@@ -15,6 +15,9 @@ git config --global user.email "6215714@qq.com"
 # 配置默认的编辑
 git config --global core.editor vim
 
+# git色彩支持
+git config --global color.ui true
+
 # 差异分析工具
 git config --global merge.tool vimdiff
 
