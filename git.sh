@@ -108,7 +108,13 @@ git merge dev_branch_id
 # 删除dev
 git branch -d dev_branch_id
 
-### merge时冲突解决(from dev)
+### merge时冲突解决
+# 在冲突的文件,寻找<<<<<<<<，========和>>>>>>>>标志的区块
+#     把冲突的地方手动修改,然后再
+git add conflict_file_name
+git commit -m "some message"
+# 查看分支图
+git log --graph --pretty=oneline --abbrev-commit
 
 
 
