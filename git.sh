@@ -101,6 +101,12 @@ git checkout -b dev
 # 检查当前分支(列出所有的分支名，并标注当前所在的分支)
 git branch
 
+### 合并和删除分支
+# 合并
+git merge dev_branch_id
+# 删除
+git branch -d dev_branch_id
+
 
 
 
