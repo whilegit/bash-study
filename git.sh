@@ -142,7 +142,6 @@ git stash pop
 ### 删除一个未经合并的分支
 git branch -D branch_id
 
-qqq
 
 
 
