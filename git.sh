@@ -146,6 +146,8 @@ git branch -D branch_id
 git remote
 
 ### 从远程分支创建一个本地库
+# 克隆
+git clone SSH_ADDRESS
 # 获取所有的远程分支,加上参数-p 将本地删除已被远程删除的分支
 git fetch
 # 建立分支,dev是无程分支名
