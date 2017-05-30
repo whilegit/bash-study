@@ -157,3 +157,19 @@ git branch --track DEV origin/DEV
 
 ### 如果push失败，使用git pull拉取远程分支的内容,并自动merge
 git pull
+
+### .gitignore文件(在版本库根目录新建.gitignore文件)
+# 列出所有的文件名,可以使用通配符*?[]
+*.ini
+password_?.ini
+temp[123].dat
+# 指定文件
+/dir/*  #忽略根目录下dir目录的所有文件
+dir/*   #忽略目录名为dir的下面所有文件
+# 不忽略
+!.gitignore  # !表示不忽略
+
+
+
+
+
