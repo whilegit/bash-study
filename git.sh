@@ -101,7 +101,7 @@ git branch dev_branch_id
 git checkout dev
 # 创建新分支并切换到该新分支,相当于前两个命令的组合
 git checkout -b dev
-# 检查当前分支(列出所有的分支名，并标注当前所在的分支)
+# 检查当前分支(列出所有的分支名，并标注当前所在的分支),如加上参数-a将列出远程分支名
 git branch
 
 ### 合并和删除分支
@@ -142,9 +142,18 @@ git stash pop
 ### 删除一个未经合并的分支
 git branch -D branch_id
 
+### 查看远程库信息,加上参数-v将显示更详细。如没有push项，表示没有push权限
+git remote
+
+### 从远程分支创建一个本地库
+# 获取所有的远程分支,加上参数-p 将本地删除已被远程删除的分支
+git fetch
+# 建立分支,dev是无程分支名
+git branch -b dev origin/dev 
 
 
+### 让本地分支跟踪某个远程分支(--set-upstream参数可能已过时)
+git branch --track DEV origin/DEV 
 
-
-
-
+### 如果push失败，使用git pull拉取远程分支的内容,并自动merge
+git pull
