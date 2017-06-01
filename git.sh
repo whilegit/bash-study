@@ -36,6 +36,7 @@ git init
 # 生成文件快照，放入暂存区。只有暂存区的文件才能提交到版本库。
 git add file1
 git add file2 file3
+git add -A # 添加所有文件
 
 ### 提交(把修改内容提交到repository中,多次add，一次提交)
 # 将暂存区的所有文件提交到版本库
@@ -83,7 +84,7 @@ git rm file-name
 ssh-keygen -t rsa -C "6215714@qq.com"
 
 ### 关联远程仓库
-git remote add origin git@github.com/USER_NAME_XXX/GIT_NAME_XXX.git
+git remote add origin git@github.com:USER_NAME_XXX/GIT_NAME_XXX.git
 
 ### 将本地库的内容推送到远程仓库
 # 第一次推送,master的所有内容
@@ -92,7 +93,7 @@ git push -u origin master
 git push origin master
 
 ### 从远程clone一个版本库repository
-git clone git@github.com/USER_NAME_XXX/GIT_NAME_XXX.git
+git clone git@github.com:USER_NAME_XXX/GIT_NAME_XXX.git
 
 ### 创建分支
 # 创建一个新的分支
@@ -150,11 +151,11 @@ git remote
 git clone SSH_ADDRESS
 # 获取所有的远程分支,加上参数-p 将本地删除已被远程删除的分支
 git fetch
-# 建立分支,dev是无程分支名
-git branch -b dev origin/dev 
+# 建立分支,origin/dev是远程分支名
+git checkout -b dev origin/dev 
 
 
-### 让本地分支跟踪某个远程分支(--set-upstream参数可能已过时)
+### 新建一个本地分支,并跟踪某个远程分支(--set-upstream参数可能已过时)
 git branch --track DEV origin/DEV 
 
 ### 如果push失败，使用git pull拉取远程分支的内容,并自动merge
