@@ -39,6 +39,7 @@ else
    statements
 fi 
 
+### 循环语句
 # while语句
 while condition
 do
@@ -57,6 +58,10 @@ do
    echo $val
 done
 
+# break, continue语句
+# 循环体while,until,for内可以使用break,continue中断循环
+# break和continue后面都可以加一个数字,表示跳出的层数
+
 # case语句,支持[]范围和*匹配
 case "$val" in
    y ) statements;;
@@ -73,7 +78,8 @@ test 或 [---] # 表示boolean测试,即true/false
 [ "$val" = "Some thing" ] # 表示变量$val的值是否为Some thing
 [ -f file ]   # 表示常规文件file是否存在 
 [ $foo -le 20 ] # 表示小于等于20
-
+|| #表示condition 条件或,任一或语句返回0表示真,注:所有bash命令都是合法的语句
+&& #表示condition 条件与,所有与语句返回0表示真
 ### 杂项
 | # 管道
 > # 重定向
