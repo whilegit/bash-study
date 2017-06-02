@@ -91,6 +91,8 @@ git remote add origin git@github.com:USER_NAME_XXX/GIT_NAME_XXX.git
 git push -u origin master
 # 常规推送
 git push origin master
+# git push的常规语法,origin是远程主机名,git push后的三个名称都可以有条件省略
+git push <origin> <local_branch_name>:<remote_branch_name>
 
 ### 从远程clone一个版本库repository
 git clone git@github.com:USER_NAME_XXX/GIT_NAME_XXX.git
