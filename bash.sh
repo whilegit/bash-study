@@ -80,10 +80,32 @@ test 或 [---] # 表示boolean测试,即true/false
 [ $foo -le 20 ] # 表示小于等于20
 || #表示condition 条件或,任一或语句返回0表示真,注:所有bash命令都是合法的语句
 && #表示condition 条件与,所有与语句返回0表示真
+
+
 ### 杂项
 | # 管道
 > # 重定向
 command > /dev/null　＃舍弃输出
+: # 表示空语句,相当于汇编的nop, 可用于流程控制结构里的语句占位
+
+# 执行某个外部的bash文件,注意:新调用的脚本将在当前shell的上下文中运行,也就是会改变环境变量
+. # 相当于source命令
+source xxxx.sh  
+
+# 导出环境变量,该环境变量将在本shell的所有子进程或子shell可见
+export val="Some new Content"
+export val
+
+### 函数的定义和调用
+func_name(){
+  local val="xxxx" # 如果val为早已是全局变量,此处local申请将暂时屏蔽全局变量 
+  statements
+  return 0 # 如没有return语句,将返回最后一条语句的返回值
+}
+# 调用函数,直接列出函数名即可
+func_name
+# 如有参数,列表名称后面,在函数内部通过$*,$1,$2等获取所传递的参数
+funct_name $param1 $param2 ...
 
 exit 0
 
