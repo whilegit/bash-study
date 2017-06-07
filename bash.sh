@@ -87,7 +87,10 @@ test 或 [---] # 表示boolean测试,即true/false
 > # 重定向
 command > /dev/null　＃舍弃输出
 : # 表示空语句,相当于汇编的nop, 可用于流程控制结构里的语句占位
-
+eval statement #执行后面字符串拼接的语句
+exec statement #执行语句,而后退当前执行的脚本
+expr expressing #计算后面的表达式,并echo表达式的执行结果,通常以val=$(expr EXPRESSION)的面目出现
+val=`statement` #捕获statement的输出,并赋值val，同val=$(statement)
 # 执行某个外部的bash文件,注意:新调用的脚本将在当前shell的上下文中运行,也就是会改变环境变量
 . # 相当于source命令
 source xxxx.sh  
