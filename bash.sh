@@ -99,7 +99,11 @@ val=`statement` #捕获statement的输出,并赋值val，同val=$(statement)
 # 执行某个外部的bash文件,注意:新调用的脚本将在当前shell的上下文中运行,也就是会改变环境变量
 . # 相当于source命令
 source xxxx.sh  
-
+# 脚本信号处理(中断处理语句)
+trap 'command' SIGNAL # 在SIGNAL信号到来时,执行command语句
+trap SIGNAL           # 在SIGNAL信号到来时,执行空命令(实质上是忽略该信号"
+trap - SIGNAL         # 恢复SIGNAL默认的处理方法
+trap -l或kill -l      # 查看所有支持的信号符号
 # 导出环境变量,该环境变量将在本shell的所有子进程或子shell可见
 export val="Some new Content"
 export val
