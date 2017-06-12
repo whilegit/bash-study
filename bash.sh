@@ -107,6 +107,8 @@ trap -l或kill -l      # 查看所有支持的信号符号
 # 导出环境变量,该环境变量将在本shell的所有子进程或子shell可见
 export val="Some new Content"
 export val
+# 删除变量或函数
+unset val
 
 ### 函数的定义和调用
 func_name(){
@@ -118,6 +120,16 @@ func_name(){
 func_name
 # 如有参数,列表名称后面,在函数内部通过$*,$1,$2等获取所传递的参数
 funct_name $param1 $param2 ...
+
+#### find (非Bash命令)
+find . -name 'pattern'   # -name 表示文件名匹配正则表达式,后面的pattern最好用''括起来
+find / -mount -name 'pattern' -print  # -mount 表示不搜索挂载的其它文件系统, -print打印出来.
+find . -atime N -mtime M -type f -user USERNAME # 搜索N天之前访问过,Ｍ天之前修改过,类型为普通文件,由USERNAME拥有的文件
+find . -newer other_file # 比other_file要新的文件(指mtime更接近现在)
+find . \(-newer X -o -name '_*' \) # 比Ｘ文件新或者文件名符合_*模式.　-a(-and)  -o(-or)  !(-not)  括号要转义 
+find . -name 'pattern' -exec ls -l {} \;    # -exec 执行后续的一段命令,不要忽略后面的分号. 把-exec替换成-ok将会有确认信息.
+
+
 
 exit 0
 
