@@ -129,7 +129,10 @@ find . -newer other_file # 比other_file要新的文件(指mtime更接近现在)
 find . \(-newer X -o -name '_*' \) # 比Ｘ文件新或者文件名符合_*模式.　-a(-and)  -o(-or)  !(-not)  括号要转义 
 find . -name 'pattern' -exec ls -l {} \;    # -exec 执行后续的一段命令,不要忽略后面的分号. 把-exec替换成-ok将会有确认信息.
 
-
+#### grep(非Bash命令, General Regular Expression Parser)
+grep something filepath  # 在filepath文件中搜索something文本
+grep -c something filepath1 filepath2  # 在filepath1和filepath2中搜索something, -c输出匹配行数目而不输出匹配行
+grep -v something filepath1  # 在filepath1搜索不匹配行
 
 exit 0
 
