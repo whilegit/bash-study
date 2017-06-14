@@ -31,7 +31,15 @@ read val  # 将输入存入val变量中,如果直接按下回车键, val将读�
 
 ### 变量求值
 foo=1
-foo=$(($foo+1)) 等效于 foo=`($foo+1)`
+foo=$(($foo+1)) # 算术扩展 
+
+### 参数扩展
+for i in 1 2
+do
+    my_func ${i}_tmp # ${i}表示参数扩展,循环时将获得1_tmp和2_tmp的参数值
+done
+# 还有${param:-default}指定缺省值, ${#param}获得param的长度,
+#     ${param%word}尾部最小截取, ${param%%word}尾部最大截取,　${param#word}头部最小截取, ${param##word}头部最大截取 注:word可以使用?*作为通配符
 
 # if语句.其中then语句可以移到条件那一行,如 if condition;then
 if condition
@@ -95,6 +103,7 @@ command > /dev/null　＃舍弃输出
 eval statement #执行后面字符串拼接的语句
 exec statement #执行语句,而后退当前执行的脚本
 expr expressing #计算后面的表达式,并echo表达式的执行结果,通常以val=$(expr EXPRESSION)的面目出现
+val=$(statement) # 捕获输出
 val=`statement` #捕获statement的输出,并赋值val，同val=$(statement)
 # 执行某个外部的bash文件,注意:新调用的脚本将在当前shell的上下文中运行,也就是会改变环境变量
 . # 相当于source命令
