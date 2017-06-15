@@ -1,4 +1,6 @@
 #! /bin/sh
+STATAS='start'
+trap "echo Exiting: critical variable = \$STATUS" EXIT
 
 ### 变量的赋值
 # 赋值(bash里的变量默认为字符串类型)
@@ -38,7 +40,7 @@ for i in 1 2
 do
     my_func ${i}_tmp # ${i}表示参数扩展,循环时将获得1_tmp和2_tmp的参数值
 done
-# 还有${param:-default}指定缺省值, ${#param}获得param的长度,
+# 还有${param:-default}指定缺省值($param不赋值),${param:=defaultxx}指定缺省值并赋值, ${#param}获得param的长度,
 #     ${param%word}尾部最小截取, ${param%%word}尾部最大截取,　${param#word}头部最小截取, ${param##word}头部最大截取 注:word可以使用?*作为通配符
 
 # if语句.其中then语句可以移到条件那一行,如 if condition;then
@@ -148,6 +150,21 @@ grep [[:alnum:]]ab filepath # [:alnum:] 匹配alpha和number
      # [:alpha:] 字母　[:ascii:] [:blank:]空格或制表符  [:cntrl:]ascii码控制符  
      # [:digit:] [:graph:]非制制非空格　[:lower:]  [:print:] [:punct:]标点 [:space:]空白字符 [:upper:] [:xdigit:]十六进制数字
 
+### here 文档(脚本内模拟读取文件)
+cat << herexxxx
+just
+like 
+in 
+file
+herexxxx
 
+### 调试脚本
+sh -n <script>   或    set -o noexec     或    set -n  # 不执行脚本,只检查语法
+sh -v <script>   或    set -o verbose    或    set -v  # 在执行命令前回显它们
+sh -x <script>   或    set -o xtrace     或    set -x  # 在处理完命令后回显它们
+                       set -o nounset    或    set -u  # 如果使用了未定义变量,就给出错误消息
+                       set +o xtrace  # 取消设置执行后回显
+                       set +o nounset # 取消未定义变量错误
+                       set +o verbose # 取消执行前回显
 exit 0
 
