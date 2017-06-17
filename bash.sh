@@ -20,6 +20,7 @@ echo $0 # 当前程序名
 echo $1 # 表示第一个参数, $2,$3...依次类推
 echo $* # 表示所有参数,并以环境变量IFS字符串的第一个字符隔开
 echo $@ # 表示所有参数,如果IFS第一个字符为空格,此时为适当整,比$*智能一些 
+echo $$ # 表示当前的shell的进程号
 echo $HOME # 环境变量HOME
 shift # 移动参数,将$2移到$1, $3移到$2, 依次类推,丢弃$1, 保留$0
 
@@ -98,9 +99,11 @@ test 或 [---] # 表示boolean测试,即true/false
 
 
 ### 杂项
-| # 管道
-> # 重定向
-command > /dev/null　＃舍弃输出
+command | command    # 管道
+command > file_path  # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则清空文件
+command >> file_path # 输入重定向到文件,如果文件不存在则创建文件,如果文件已存在则append到末尾
+command > /dev/null  ＃舍弃输出
+
 : # 表示空语句,相当于汇编的nop, 可用于流程控制结构里的语句占位
 eval statement #执行后面字符串拼接的语句
 exec statement #执行语句,而后退当前执行的脚本
@@ -121,16 +124,20 @@ export val
 # 删除变量或函数
 unset val
 
-### 函数的定义和调用
+### 函数的定义和调用(注意:Bash的函数概令与Ｃ的函数不同,有点像内联过程)
 func_name(){
   local val="xxxx" # 如果val为早已是全局变量,此处local申请将暂时屏蔽全局变量 
+  val2="xxxx"      # 创设或修改全局空间的val2变量.如外部之前未定义,此时外部也能够访问,因此可以作为返回结果的载体
   statements
+  echo $result     # 输出一些东西,可能使用$()方式捕捉
   return 0 # 如没有return语句,将返回最后一条语句的返回值
 }
 # 调用函数,直接列出函数名即可
 func_name
 # 如有参数,列表名称后面,在函数内部通过$*,$1,$2等获取所传递的参数
 funct_name $param1 $param2 ...
+# 捕捉函数的标准输出作为返回值
+val=$(func_name)
 
 #### find (非Bash命令)
 find . -name 'pattern'   # -name 表示文件名匹配正则表达式,后面的pattern最好用''括起来
