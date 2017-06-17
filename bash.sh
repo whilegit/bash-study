@@ -101,7 +101,7 @@ test 或 [---] # 表示boolean测试,即true/false
 ### 杂项
 command | command    # 管道
 command > file_path  # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则清空文件
-command >> file_path # 输入重定向到文件,如果文件不存在则创建文件,如果文件已存在则append到末尾
+command >> file_path # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则append到末尾
 command > /dev/null  ＃舍弃输出
 
 : # 表示空语句,相当于汇编的nop, 可用于流程控制结构里的语句占位
