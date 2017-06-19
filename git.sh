@@ -52,8 +52,10 @@ git status
 
 ### 比较文件差异
 git diff
-# 比较某个工作区文件和暂存区文件的差别
+# 比较某个工作区文件和暂存区文件(如果暂存区没有快照,则比较最近一次提交)则比较最近一次提交)的差别
 git diff file_name 
+# 比较暂存区和HEAD的差异
+git diff --cached file_name
 
 ###查看版本记录
 git log

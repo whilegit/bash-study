@@ -97,13 +97,13 @@ test 或 [---] # 表示boolean测试,即true/false
 || #表示condition 条件或,任一或语句返回0表示真,注:所有bash命令都是合法的语句
 && #表示condition 条件与,所有与语句返回0表示真
 
-
 ### 杂项
 command | command    # 管道
 command > file_path  # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则清空文件
 command >> file_path # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则append到末尾
 command > /dev/null  ＃舍弃输出
 command < file_path  # 文件作为标准输入设备 如: read val < path_file
+wc -l file_path      # 统计文件的行数,　-c为统计字数, -w为统计单词数
 
 : # 表示空语句,相当于汇编的nop, 可用于流程控制结构里的语句占位
 eval statement #执行后面字符串拼接的语句
@@ -114,6 +114,7 @@ val=`statement` #捕获statement的输出,并赋值val，同val=$(statement)
 # 执行某个外部的bash文件,注意:新调用的脚本将在当前shell的上下文中运行,也就是会改变环境变量
 . # 相当于source命令
 source xxxx.sh  
+
 # 脚本信号处理(中断处理语句)
 trap 'command' SIGNAL # 在SIGNAL信号到来时,执行command语句
 trap SIGNAL           # 在SIGNAL信号到来时,执行空命令(实质上是忽略该信号"
