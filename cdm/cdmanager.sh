@@ -24,8 +24,9 @@ confirm(){
 }
 
 menu_choice=""
-title_file="title.cdb"
-tracks_file="tracks.cdb"
+title_file="title.tmp"
+tracks_file="tracks.tmp"
+temp_file=/tmp/cdb.$$
 
 set_menu_choice(){
     clear
@@ -111,7 +112,73 @@ add_record(){
     return
 }
 
+find_cd(){
+    if [ "$1" = "n" ]; then
+        asklist=n
+    else
+        asklist=y
+    fi
+
+    cdcatnum=""
+    echo -e "请输入要搜索的ＣＤ名称: \c"
+    read searchstr
+    if [ "$searchstr" = "" ];then
+        return 0
+    fi
+
+    grep "$searchstr" $title_file > $temp_file
+
+    set $(wc -l $temp_file)
+    linesfound=1
+
+    case "$linesfound" in
+        0 ) echo "对不起,没有找到."
+            pause
+            return 0
+            ;;
+        1 ) ;;
+        2 ) echo "对不起,数据文件中存在同名的多张ＣＤ!"
+            echo "列表如下"
+            cat $temp_file
+            pause
+            return 0
+    esac
+
+    IFS=","
+    read cdcatnum cdtitle cdtype cdac < $temp_file
+    IFS=" "
+    if [ -z "$cdcatnum" ]; then
+        echo "对不起,读取ＣＤ目录失败"
+        pause
+        return 0
+    fi
+
+    echo 
+    echo CD目录编号: $cdcatnum
+    echo CD名称: $cdtitle
+    echo CD类型: $cdtype
+    echo CD作曲家: $cdac
+    echo
+    pause
+    if [ "$asklist" = "y" ]; then
+        echo -e "是否要查看该ＣＤ的曲目列表? \c"
+        read x
+        if [ "$x" = "y" ]; then
+            echo
+            list_tracks
+            echo
+        fi
+    fi
+    return 1
+}
+
+
 add_record
+add_record
+
+find_cd y
+
+
 exit 0
 
 
