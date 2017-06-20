@@ -36,9 +36,9 @@ set_menu_choice(){
     echo "  f) 查找ＣＤ"
     echo "  c) 统计ＣＤ和曲目数量"
     if [ "$cdcatnum" != "" ];then
-        echo "  1) 列出 [$cdtitle] 上的所有曲目"
-        echo "  2) 删除 [$cdtitle]"
-        echo "  3) 更新 [$cdtitle] 上的曲目信息"
+        echo "  l) 列出 [$cdtitle] 上的所有曲目"
+        echo "  r) 删除 [$cdtitle]"
+        echo "  u) 更新 [$cdtitle] 上的曲目信息"
     fi
     echo "  q) 退出"
     echo
@@ -82,7 +82,7 @@ add_record_tracks(){
     done
 }
 
-add_record(){
+add_records(){
     echo -e "输入CD编号: \c"
     read tmp
     cdcatnum=${tmp%%,*}
@@ -172,32 +172,115 @@ find_cd(){
     return 1
 }
 
+update_cd(){
+    if [ -z "$cdcatnum" ]; then
+        echo "请输入CD编号"
+        find_cd n
+    fi
 
-add_record
-add_record
+    if [ -n "$cdcatnum" ]; then
+        echo "$cdcatnum 的曲目表:"
+        list_tracks
+        echo
+        echo "为 $cdtitle 重新设置曲目表:"
+        confirm && {
+            grep -v "^${cdcatnum}," $tracks_file > $temp_file
+            mv $temp_file $tracks_file
+            echo
+            add_record_tracks
+        }
+    fi
+    return
+}
 
-find_cd y
+list_tracks(){
+    if [ "$cdcatnum" = "" ];then
+        echo "没有输入CD编号"
+        return
+    else
+       grep "^${cdcatnum}," $tracks_file > $temp_file
+       num_tracks=$(wc -l $temp_file)
+       if [ "$num_tracks" = "0" ];then
+          echo " CD \"$cdtitle\"　没有曲目." 
+       else {
+          echo
+          echo "$cdtitle:-"
+          echo
+          cut -f 2- -d , $temp_file
+          echo
+        } | ${PAGER:-more}
+       fi
+    fi
+    pause
+    return
+}
 
+count_cds(){
+    set $(wc -l $title_file)
+    num_titles=$1
+    set $(wc -l $tracks_file)
+    num_tracks=$1
+    echo "发现$num_titles 张CD, 总共有 $num_tracks 首歌曲"
+    confirm
+    return
+}
 
+remove_records(){
+    if [ -z "$cdcatnum" ];then
+        echo "您必须先输入ＣＤ编号"
+        find_cd n
+    fi
+    if [ -n "$cdcatnum" ];then
+        echo "您正在删除CD $title"
+        confirm && {
+           grep -v "^${cdcatnum}," $title_file > $temp_file
+           mv $temp_file $title_file
+           grep -v "^${cdcatnum}," $tracks_file > $temp_file
+           mv $temp_file $tracks_file
+           cdcatnum=""
+           echo "$cdcatnum 已删除"
+        }
+        pause
+    fi 
+}
+
+rm -f $temp_file
+if [ ! -f $title_file ]; then
+    touch $title_file
+fi
+
+if [ ! -f $tracks_file ]; then
+    touch $tracks_file
+fi
+
+clear
+echo
+echo
+echo "Mini CD 管理器"
+sleep 1
+
+quit=n
+while [ "$quit" != "y" ];
+do
+    set_menu_choice
+    case "$menu_choice" in
+        a ) add_records;;
+        r ) remove_records;;
+        f ) find_cd y;;
+        u ) update_cd;;
+        c ) count_cds;;
+        l ) list_tracks;;
+        b ) echo
+           more $title_file
+           echo
+           pause;;
+        q | Q ) quit=y;;
+        * ) echo "不能识别的操作 $menu_choice ";;
+    esac
+done
+
+rm -f $temp_file
+echo "结束"
 exit 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
