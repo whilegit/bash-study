@@ -56,9 +56,21 @@ git diff
 git diff file_name 
 # 比较暂存区和HEAD的差异
 git diff --cached file_name
+# 比较两次提交commit的差异
+git diff --stat -p commit1..commit2   # --stat表示列表统计信息(即改了哪些文件) -p列表具体差异, 比较范围一端可以省略(替代为HEAD)
 
-###查看版本记录
+###查看全部版本记录
 git log
+# 查看最近几个版本记录
+git log -3
+# 查看版本变更统计信息
+git log --stat
+# 查看版本变更详细
+git log -p
+# 查看分支图
+git log --graph --pretty=oneline --abbrev-commit
+### 查看所有的版本历史
+git reflog 
 
 ### 退回到之前的版本
 git reset --hard commit_id_xxxxx
@@ -66,8 +78,6 @@ git reset --hard HEAD^
 git reset --hard HEAD^^
 git reset --hard HEAD~10
 
-### 查看所有的版本历史
-git reflog 
 
 ### 舍弃工作区的内容(回到最近一次commit或者add时的状态)
 # 如果暂存区有快照，则恢复暂存区的内容至工作区
@@ -123,8 +133,6 @@ git branch -d dev_branch_id
 #     把冲突的地方手动修改,然后再
 git add conflict_file_name
 git commit -m "some message"
-# 查看分支图
-git log --graph --pretty=oneline --abbrev-commit
 
 ### 现场保护和切换
 # 工作现场保护,切换上最近一次提交时的状态
