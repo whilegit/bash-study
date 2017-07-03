@@ -149,6 +149,7 @@ find . -atime N -mtime M -type f -user USERNAME # 搜索N天之前访问过,Ｍ�
 find . -newer other_file # 比other_file要新的文件(指mtime更接近现在)
 find . \(-newer X -o -name '_*' \) # 比Ｘ文件新或者文件名符合_*模式.　-a(-and)  -o(-or)  !(-not)  括号要转义 
 find . -name 'pattern' -exec ls -l {} \;    # -exec 执行后续的一段命令,不要忽略后面的分号. 把-exec替换成-ok将会有确认信息.
+find . -name 'pattern' -exec grep pattern {} -H \; # find和grep配合查找指定的内容, -H参数打印匹配的文件名
 
 #### grep(非Bash命令, General Regular Expression Parser)
 grep something filepath  # 在filepath文件中搜索something文本
