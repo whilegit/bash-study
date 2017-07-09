@@ -27,6 +27,12 @@ if [ "$1" = "-r" ] && [ $params_count -eq 2 ];then
   exit 0
 fi
 
+# 判度是否是数字（针对define有用，如果是数字则不再追查)
+# bash函数没有返回值，则返回最后一条语句的返回值
+is_number(){
+   egrep '^[0-9]+$' <<< $1 >> /dev/null
+}
+
 # 具体的查找函数,几个正则表达式(递归调用)
 # 第一个是__STD_TYPE(是typedef的别名)和typedef
 # 第二个是define
@@ -54,13 +60,23 @@ dofind(){
    # 单行文本继续分析，进一步查找定义的根源
    set $result
    case "$1" in
-       *\#define | \#) 
-          if [ "$3" = 'unsigned' ] || [ "$3" = 'int' ] || [ "$3" = 'char' ] || [ "$3" = "short" ] || [ "$3" = "long" ];then
+       *\#define) 
+          if [ "$3" = 'unsigned' ] || [ "$3" = 'signed' ] || [ "$3" = 'int' ] || [ "$3" = 'char' ] || [ "$3" = "short" ] || [ "$3" = "long" ] || is_number "$3" ;then
              break
           else
              dofind "$3" "$path1"
              dofind "$3" "$path2"
           fi
+          ;;
+       *\#)
+          if [ "$2" = 'define' ]; then
+              if [ "$4" = 'unsigned' ] || [ "$4" = 'signed' ] || [ "$4" = 'int' ] || [ "$4" = 'char' ] || [ "$4" = "short" ] || [ "$4" = "long" ] || is_number "$4" ;then
+                 break
+              else
+                 dofind "$4" "$path1"
+                 dofind "$4" "$path2"
+              fi
+          fi 
           ;;
        *__STD_TYPE)
            dofind "$2" "$path1"
