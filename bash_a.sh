@@ -46,3 +46,7 @@ tar -j ... # 指明使用bzip2属性(文件名通常为.tar.bz2)
 tar -czvf jpg.tar.gz /dir/*.jpg  # 将目录里的所有jpg文件打包
 tar -xzvf jpg.tar.gz        # 解压文件
 
+## chmod修改文件模式(详细参考linux-c结构体stat.st_mode)
+chmod u+x file_path    # 增加文件属主的执行权限.其中,u可以换成g或者o, +可以换成-, x可以换成r/w/s
+chmod mod -R dir_path  # -R 表示对目录递归调用
+chmod 664 file_path    # 使用八进制数权限标记
