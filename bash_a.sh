@@ -50,3 +50,20 @@ tar -xzvf jpg.tar.gz        # 解压文件
 chmod u+x file_path    # 增加文件属主的执行权限.其中,u可以换成g或者o, +可以换成-, x可以换成r/w/s
 chmod mod -R dir_path  # -R 表示对目录递归调用
 chmod 664 file_path    # 使用八进制数权限标记
+
+## /etc/passwd文件,该文件存放系统的用户信息
+#
+# 用户名:口令:uid:所属主gid:用户描述:用户家目录:用户Shell 
+# lzr:x:1000:1000:Linzhongren-Centos7.0:/home/lzr:/bin/bash 
+#
+# 超级用户的uid为0, uid在100以下通常被系统使用.普通用户的uid从100(或1000)开始. 
+# /etc/passwd中用户对应的gid为主组,是其登入后默认的组. 实际上,每一个linux用户可以属于多个组,参见/etc/group文件
+#
+## /etc/group文件,该文件存放系统的用户组信息
+#
+# 组名:口令:gid:组内用户列表(如有多个,以逗号隔开)
+# lzr:x:1000:lzr
+#
+chown -R user:group file-path  # 修改文件的属主和属组
+id -u # 获取当前用户的uid,如要获取其它用户的uid,在命令后加上其用户名
+id -g # 获取当前用户的gid,如要获取其它用户的gid,在命令后加上其用户名
