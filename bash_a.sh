@@ -67,3 +67,25 @@ chmod 664 file_path    # 使用八进制数权限标记
 chown -R user:group file-path  # 修改文件的属主和属组
 id -u # 获取当前用户的uid,如要获取其它用户的uid,在命令后加上其用户名
 id -g # 获取当前用户的gid,如要获取其它用户的gid,在命令后加上其用户名
+
+## touch 修改文件的atime和mtime至当前时间(文件不存在，则新建文件)
+touch file_name
+touch -a file_name # 仅修改atime
+touch -m file_name # 仅修改mtime
+
+## mkdir 新建目录
+mkdir dir_name
+
+## rmdir 删除空目录
+rmdir dir_name #若目录非空，则报错
+
+## rm 删除文件或目录
+rm -d dir_name # 等同于rmdir dir_name, 若目录非空则报错
+rm -r dir_name # 递归删除当前目录,子目录及其文件，此目录将被删除. -R和-r相同.
+rm file_name   # 删除文件,调用了unlink系统调用
+rm -rf dir_name # 强制地／递归删除而不提醒错误
+
+cd dir_name # 改变当前工作目录
+pwd # 打印工作目录
+
+
