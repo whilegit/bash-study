@@ -173,6 +173,17 @@ git branch --track DEV origin/DEV
 ### 如果push失败，使用git pull拉取远程分支的内容,并自动merge
 git pull
 
+### tag 版本号
+git tag # 显示本地库的所有tag
+git tag v1.0.0  #在本地库打上tag
+git tag -a v1.0.1 -m "v1.0.1版本简易说明" # 带附注的tag
+git tag -a v1.0.1 97bf370  # 在某一次commit上打tag
+git push origin v1.0.1  # 将本地的v1.0.1发布到远程库中
+git push origin --tags  # 把本地库的所有tags都上传到远程库中
+git tag -d v1.0.1       # 删除v1.0.1这个本地tag
+git checkout v1.0.1  # tag类似于branch，可以直接用checkout切换
+
+
 ### .gitignore文件(在版本库根目录新建.gitignore文件)
 # 列出所有的文件名,可以使用通配符*?[]
 *.ini
