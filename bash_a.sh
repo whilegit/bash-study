@@ -88,4 +88,5 @@ rm -rf dir_name # 强制地／递归删除而不提醒错误
 cd dir_name # 改变当前工作目录
 pwd # 打印工作目录
 
-
+## ssh远程登录命令
+ssh -l <username> host  # 如 ssh -l root remote_ip
