@@ -90,3 +90,8 @@ pwd # 打印工作目录
 
 ## ssh远程登录命令
 ssh -l <username> host  # 如 ssh -l root remote_ip
+
+## 显示十六进制(这三个命令有些许不同，待有空的时候好好研究一下)
+od -t x1 file_name
+xxd file_name
+hexdump -C file_name
