@@ -95,3 +95,19 @@ ssh -l <username> host  # 如 ssh -l root remote_ip
 od -t x1 file_name
 xxd file_name
 hexdump -C file_name
+
+## rpm包的安装和删除
+rpm -qa    # -q(--query)列出所有已安装的rpm包 
+rpm -ivh PACKAGE_NAME #安装一个rpm包, -i(--install), -v(print verbose information显示安装过程), -h(print 50 hash显示hash值)
+rpm -Uvh PACKAGE_NAME #升级一个rpm包, -U(--upgrade)
+rpm -e PACKAGE_NAME   # 删除一个rpm包, -e(--erase)
+
+## ifconfig (interface config) 网络配置
+### 网卡的配置脚本在/etc/sysconfig/network-scripts
+ifconfig  #　查看当前的网络状态(列出所有的网卡,ens33或eth0为有线网卡, virbr0为虚拟\
+　　　　　#　网桥,为本地上的虚拟网卡提供DHCP服务)
+ifconfig ens33 down  # 打闭网卡
+ifconfig ens33 up    # 开启网卡
+ifconfig ens33 hw ether 00:00:00:00:ff:ff  # 临时修改网卡的mac地址
+ifconfig ens33 192.168.6.128 netmask 255.255.255.0 # 临时修改网卡的ip地址
+
