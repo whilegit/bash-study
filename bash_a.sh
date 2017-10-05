@@ -46,6 +46,11 @@ tar -j ... # 指明使用bzip2属性(文件名通常为.tar.bz2)
 tar -czvf jpg.tar.gz /dir/*.jpg  # 将目录里的所有jpg文件打包
 tar -xzvf jpg.tar.gz        # 解压文件
 
+##rar和unrar工具
+rar a DEST_FILE.rar SOURCE_FILES   # 压缩命令，SOURCE_FILES可以是多个文件(以空格隔开), 也可以使用*和?通配符
+rar e SOURCE_FILE.rar   # 将SOURCE_FILE.rar文件目录解压到当前目录，且不保SOURCE_FILE.rar的目录结构(即解压后的文件没有目录，只有文件) 
+rar x SOURCE_FILE.rar   # 与e命令类似，但保留目录结构
+
 ## chmod修改文件模式(详细参考linux-c结构体stat.st_mode)
 chmod u+x file_path    # 增加文件属主的执行权限.其中,u可以换成g或者o, +可以换成-, x可以换成r/w/s
 chmod mod -R dir_path  # -R 表示对目录递归调用
@@ -110,4 +115,9 @@ ifconfig ens33 down  # 打闭网卡
 ifconfig ens33 up    # 开启网卡
 ifconfig ens33 hw ether 00:00:00:00:ff:ff  # 临时修改网卡的mac地址
 ifconfig ens33 192.168.6.128 netmask 255.255.255.0 # 临时修改网卡的ip地址
+
+## 测试文件类型
+file file_path  
+file -b file_path # 返回值中不包括文件名 --brief
+file -i file_path # 返回MIME类型，如: text/html;charset=utf-8
 
