@@ -121,3 +121,18 @@ file file_path
 file -b file_path # 返回值中不包括文件名 --brief
 file -i file_path # 返回MIME类型，如: text/html;charset=utf-8
 
+##netstat 命令
+netstat -a  ## 列出所有的连接（包括处于监听中的端口）
+netstat -at ## 列出所有TCP连接
+netstat -au ## 列出的甩UDP连接
+netstat -l  ## 列出的正在监听的连接，可以加上-t和-u
+netstat -atn ## 列出所有tcp连接，并禁用反向域名解析(加快查询速度),此处与-at功能类似，其中t可以用-u替换。加上-n可以显示端口而不显示此端口代表的协议
+netstat -ptln ## 列示所有正在监听的tcp连接，并显示pid(需要运行在root之下)
+netstat -ptlne ## 加上e可以显示一些扩展信息，如进程所属的用户
+netstat -st ## 打印tcp连接的统计信息，如出入数据量
+netstat -r  ## 打印内核的路由信息
+netstat -i  ## 打印网卡信息，与ifconfig类似
+netstat -c ## 持续输出
+netstat -ptln | grep 80 # 查看80端口的占用情况
+
+
