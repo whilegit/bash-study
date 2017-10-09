@@ -135,4 +135,12 @@ netstat -i  ## 打印网卡信息，与ifconfig类似
 netstat -c ## 持续输出
 netstat -ptln | grep 80 # 查看80端口的占用情况
 
+# 进程的六种状态
+  # R 运行态或等待运行态(Running or Runnable On run queue)
+  # S 可中断睡眠态(Interruptible Sleep), 此种状态可接受中断信号,大多数进程处于这种状态之下.
+      #进程可能在等待某个信号量,或调用了sleep函数等,一旦条件达成,可自动恢复执行.
+  # D 不可断睡眠态(uninterruptible Sleep), 可能处于等待某些IO操作中,不可被中断,若进程长时间处于此状态,则表示某些IO出现故障,必须重启系统(原因是kill无法杀掉此类进程)
+  # T 暂停或跟踪态(Stopped or Traced), 当进程收到SIGSTOP等信号时,进入该状态,进行暂停运行;如继续收到SIGCONT信号,则恢复执行;在Linux C的GBD调试中,也进入此状态.
+  # Z 退出状态之僵尸状态(Exit_Zombie),进程运行结束,需父进程调用wait系统调用过来收尸(task struct)
+  # X 退出状态之清除阶段(Exit_Dead), 进程将立即释放所有资源,包括task struct, ps命令极难捕捉到此状态. 
 
