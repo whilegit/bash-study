@@ -60,11 +60,14 @@ chmod 664 file_path    # 使用八进制数权限标记
 #
 # 用户名:口令:uid:所属主gid:用户描述:用户家目录:用户Shell 
 # lzr:x:1000:1000:Linzhongren-Centos7.0:/home/lzr:/bin/bash 
+useradd USERNAME -g GROUPNAME
+passwd USERNAME  # 为一个用户设置密码
 #
 # 超级用户的uid为0, uid在100以下通常被系统使用.普通用户的uid从100(或1000)开始. 
 # /etc/passwd中用户对应的gid为主组,是其登入后默认的组. 实际上,每一个linux用户可以属于多个组,参见/etc/group文件
 #
 ## /etc/group文件,该文件存放系统的用户组信息
+groupadd GROUPNAME
 #
 # 组名:口令:gid:组内用户列表(如有多个,以逗号隔开)
 # lzr:x:1000:lzr
@@ -144,3 +147,12 @@ netstat -ptln | grep 80 # 查看80端口的占用情况
   # Z 退出状态之僵尸状态(Exit_Zombie),进程运行结束,需父进程调用wait系统调用过来收尸(task struct)
   # X 退出状态之清除阶段(Exit_Dead), 进程将立即释放所有资源,包括task struct, ps命令极难捕捉到此状态. 
 
+# vsftpd的安装
+## 可以使用yum安装
+## 配置文件一般在/etc/vsftpd上
+   # 禁止匿名用户的登录　anonymous_enable=NO
+   # 启用userlist文件的效力 userlist_enable=YES
+   # 将userlist文件设置成白名单 userlist_deny=NO
+   # 设置本地用户的登录用户为/var/wwwroot
+## ftpusers目录为禁止登录的用户，总是生效，不改动
+## 添加允许登录的用户至userlist文件
