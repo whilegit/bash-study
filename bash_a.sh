@@ -153,6 +153,6 @@ netstat -ptln | grep 80 # 查看80端口的占用情况
    # 禁止匿名用户的登录　anonymous_enable=NO
    # 启用userlist文件的效力 userlist_enable=YES
    # 将userlist文件设置成白名单 userlist_deny=NO
-   # 设置本地用户的登录用户为/var/wwwroot
+   # 设置本地用户的登录目录 local_root=/var/wwwroot
 ## ftpusers目录为禁止登录的用户，总是生效，不改动
 ## 添加允许登录的用户至userlist文件
