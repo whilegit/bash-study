@@ -95,6 +95,13 @@ rm -rf dir_name # 强制地／递归删除而不提醒错误
 
 cd dir_name # 改变当前工作目录
 pwd # 打印工作目录
+cp -R src/file dest/file  # 复制文件
+# 将本地文件通过ssh上传至远程服务器(上传前不能登入远程服务器)
+# 如果本地是windows,可以安装git bash 集成的MINGW64模拟Linux环境
+scp /local/source/file root@remote_ip:/dest/dir 
+# 将远程的文件下载至本地
+scp root@remote_ip:/src/file /local/dest
+
 
 ## ssh远程登录命令
 ssh -l <username> host  # 如 ssh -l root remote_ip
