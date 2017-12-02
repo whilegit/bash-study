@@ -14,6 +14,7 @@ mysql
 mysql> use mysql
 #修改密码
 mysql> update user set password=password("new-password") Where user="root";
+       Alter USER 'root'@'localhost' IDENTIFIED BY 'new-password'; # 也可以使用这个语句
 #刷新权限
 mysql> flush privileges;
 #退出mysql
