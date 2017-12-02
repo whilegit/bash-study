@@ -1,6 +1,8 @@
 #!/bin/sh
 
 #登录mysql,其中-p和密码不能有空格
+#刚装好mysql5.7时，会自动生成一个临时密码，存放于/var/log/mysqld.log里
+# 可使用命令　grep 'temporary password' /var/log/mysqld.log　查看
 mysql -h localhost -u root -pPASSWORD 
 
 ##重置root密码的流程
