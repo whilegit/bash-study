@@ -7,13 +7,13 @@ mysql -h localhost -u root -pPASSWORD
 
 ##重置root密码的流程
 #停止服务
-service mysql stop
+service mysqld stop
 #进入安全模式,不能少了&符号
 mysqld_safe --skip-grant-tables &
 #启动安全模式后，使用mysql命令就可以免密登录了
 mysql
 #选择mysql库
-mysql> use mysql
+mysql> use mysql;
 #修改密码
 mysql> update user set password=password("new-password") Where user="root";
        Alter USER 'root'@'localhost' IDENTIFIED BY 'new-password'; # 也可以使用这个语句
@@ -26,6 +26,14 @@ mysql> exit
 service mysqld start
 # 然后就可以用新密码登录了
 
+## 导入数据库映像文件
+mysql> source /db/img/file  # 时间通常很长，最好打开screen工具或者加上&转为后台运行
 
+# 显示数据库列表
+mysql> show databases;
+# 选择数据库
+mysql> use DBNAME;
+# 显示数据表
+mysql> show tables;
 
 
