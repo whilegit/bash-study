@@ -1,12 +1,5 @@
 #!/bin/sh
 
-## time工具,用于测算应用程序运行的时间
-time ./command
-TIMEFORMAT="" time ./command  # 加上TIMEFORMAT环境变量,让time输出ＣＰＵ使用率
-
-## whereis工具,用于查找可执行文件／源文件/man文档的位置(可执行文件在$PATH指明的目录查找）
-whereis nginx
-
 ## /etc/passwd文件,该文件存放系统的用户信息
 #
 # 用户名:口令:uid:所属主gid:用户描述:用户家目录:用户Shell 
@@ -78,13 +71,25 @@ netstat -ptln | grep 80 # 查看80端口的占用情况
   # Z 退出状态之僵尸状态(Exit_Zombie),进程运行结束,需父进程调用wait系统调用过来收尸(task struct)
   # X 退出状态之清除阶段(Exit_Dead), 进程将立即释放所有资源,包括task struct, ps命令极难捕捉到此状态. 
 
-# vsftpd的安装
-## 可以使用yum安装
-## 配置文件一般在/etc/vsftpd上
-   # 禁止匿名用户的登录　anonymous_enable=NO
-   # 启用userlist文件的效力 userlist_enable=YES
-   # 将userlist文件设置成白名单 userlist_deny=NO
-   # 设置本地用户的登录目录 local_root=/var/wwwroot
-## ftpusers目录为禁止登录的用户，总是生效，不改动
-## 添加允许登录的用户至userlist文件
+## 进程快照ps (processes snapshot)
+# 不加参数直接运行ps,返回当前用户正在运行的进程.
+# PID   TTY      TIME     CMD (从左到右:　进程号 终端号 CPU执行时间 启动命令)
+# 28824 pts/0    00:00:00 bash
+# 29264 pts/0    00:00:00 ps
+ps 
+# 加参数-ax 将显示当前所有进程,包括后台运行的进程 
+ps -ax
+# 加参数-u USERNAME, 将显示该用户的进程
+ps -u USERNAME
+# 使用 -aux参数,显示详细信息
+ps -aux --sort -pcpu # -pcpu按cpu降序排列,+pcpu按升序排列
+ps -aux --sort -pmem # -pmem按mem降序排列,+pmem按升序排列
+# 使用-C cmd过滤条件
+ps -C COMMAND # 通过cmd字段检索进程(可能要完全吻合)
+# 使用-f 输出更详细的格式化数据
+ps -af 
+# 使用 -L PID 输出与该进程的子线程
+ps -L PID
+# 使用 -axjf 显示进程的树列结构
+ps -axjf # 也可使用pstree命令
 

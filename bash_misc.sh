@@ -1,5 +1,10 @@
 #!/bin/sh
 
+## time工具,用于测算应用程序运行的时间
+time ./command
+TIMEFORMAT="" time ./command  # 加上TIMEFORMAT环境变量,让time输出ＣＰＵ使用率
+
+###############################################################################
 ## Linux 定时任务 crontab
 # 相关文件 执行命令 ( ls -la /etc | grep cron)
 # /etc/cron.deny 表示楚止使用的user列表,即黑名单
@@ -34,6 +39,11 @@ m h d M w command
 
 ## 删除全部任务
 crontab -u USERNAME -r # 将删除整个文件,要作好备份工作
+###############################################################################
+
+# 查找某进程的启动代码,先要获取进程号pid,然后调用
+cat /proc/Process_Id/cmdline # 其中Process_Id由具体的进程号替换
+
 
 
 exit 0

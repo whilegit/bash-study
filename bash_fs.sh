@@ -5,6 +5,9 @@
 umask        # 返回当前用户的掩码. 如002表示-------w-,即掩掉其它用户的写权限
 umask 022    # 设置当前用户的掩码
 
+## whereis工具,用于查找可执行文件／源文件/man文档的位置(可执行文件在$PATH指明的目录查找）
+whereis nginx
+
 ## head 工具
 head file-path   # 显示头6行内容
 head -n 6  # 显示头6行内容
