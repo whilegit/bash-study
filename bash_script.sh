@@ -100,8 +100,11 @@ test 或 [---] # 表示boolean测试,即true/false
 
 ### 杂项
 command | command    # 管道
-command > file_path  # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则清空文件
-command >> file_path # 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则append到末尾
+# 输出重定向到文件,如果文件不存在则创建文件,如果文件已存在则清空文件
+command > file_path  
+command >> file_path # 如果文件已存在则append到末尾
+# 标准输出stdout(1)重定向至file_path,标准错误stderr(2)重定向至stdout,不要忘了&符号
+command > file_path 2>&1 
 command > /dev/null  ＃舍弃输出
 command < file_path  # 文件作为标准输入设备 如: read val < path_file
 command <<< "$val"   # 将$val内容先送入stdin，再传给命令.如cat,grep等输入文件作为参数时有用
