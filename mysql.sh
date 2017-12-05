@@ -35,5 +35,18 @@ mysql> show databases;
 mysql> use DBNAME;
 # 显示数据表
 mysql> show tables;
+# 显示数据表结构
+mysql> show columns from TABLE_NAME;
 
+# 增加一个用户
+## 命令的%可以改成localhost,这样用户只能在本机登入,百分号%表示任何地方可以登入
+mysql> create user 'USERNAME'@'%' identified by 'PASSWORD';
+
+## 授予权限
+# 授予全部权限
+mysql> grant all privileges on *.* to 'USERNAME'@'%' identified by 'PASSWORD' with grant option;
+# 授予部分权限,仅授予USERNAME从192.168.1.124登入,DANAME库全部表的select,update,insert权限
+mysql> grant select,update,insert on DBNAME.* to 'USERNAME'@'192.168.1.124' identified by 'PASSWORD' with grant option;
+# 刷新权限表
+mysql> flush privileges;
 
