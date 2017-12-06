@@ -28,6 +28,9 @@ service mysqld start
 
 ## 导入数据库映像文件
 mysql> source /db/img/file  # 时间通常很长，最好打开screen工具或者加上&转为后台运行
+# 导入数据库后，若版本不同可能会出现问题 如3009(HY000)错误
+mysql_upgrade -u root -pPASSWORD
+
 
 # 显示数据库列表
 mysql> show databases;
