@@ -109,6 +109,10 @@ git push <origin> <local_branch_name>:<remote_branch_name>
 ### 从远程clone一个版本库repository
 git clone git@github.com:USER_NAME_XXX/GIT_NAME_XXX.git
 
+## 修改关联的远程仓库
+git remote rm origin
+git remote add origin [NEW_URL]
+
 ### 创建分支
 # 创建一个新的分支
 git branch dev_branch_id
