@@ -10,7 +10,7 @@
 --enable-fpm # 启用fastcgi的fpm进程管理器
 --disable-fileinfo # 用来探测文件的类型,封装了libmagic库
 --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd # mysql相关
---with-iconv-dir=/usr/local # iconv编码转换模块,设定其路径;如果找不到,可能还需要加/bin
+--with-iconv-dir=/usr/local # iconv编码转换模块,设定其路径;如果找不到,可能还需要加/bin；还是找不到，直接运行 make ZEND_EXTRA_LIBS='-liconv'
 --with-freetype-dir --with-jpeg-dir --with-png-dir --with-gd --enable-gd-native-ttf # gd库相关
 --enable-exif # 允许单独从jpeg或tiff文件中提出exif头信息,不依赖于gd库
 --with-zlib # 增加压缩模块,可能用于http压缩传输
