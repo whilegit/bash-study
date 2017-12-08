@@ -1,7 +1,8 @@
 #!/bin/sh
 
-## 编译安装
-./configure 
+
+## 编译安装, 编辑前要新建好/usr/local/php文件
+./configure \
 --prefix=/usr/local/php # configure的标准选项,选择安装位置
 --with-config-file-path=/usr/local/php/etc # 设置php.ini的搜索路径
 --with-config-file-scan-dir=/usr/local/php/etc/php.d # 其它配置文件的路径
