@@ -68,7 +68,7 @@ server{
 server{
    location ~\.php$ {
       root /data/www;
-      fastcgi_pass location:9000;  # php-fpm进程或其它fastcgi实现。
+      fastcgi_pass host:9000;  # php-fpm进程或其它fastcgi实现。
       fastcgi_index index.php;
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       fastcgi_param QUERY_STRING $query_string;
@@ -78,6 +78,29 @@ server{
       root /data;
    }
 }
+
+###### location 语法规则 #############
+# Syntax:    location [ = | ~ | ~* | ^~ ] uri {...}
+#            location @name {...}
+location uri {}    # 前缀匹配(普通)
+location ^~ uri {} # 前缀区配(若最长，则不再进行正则匹配)
+location = uri {}  # 前缀精准匹配(若匹配，则不再进行后续的匹配)
+location ~ uri {}  # 正则匹配(大小写敏感)
+location ~* url {} # 正则匹配(不区分大小写)
+# 配置规则
+# 1. 先按顺序依次进行前缀匹配,并记录最长前缀的那个location;
+# 2. 在1的匹配中，若遇到前缀精准匹配,则立即停止其余匹配;
+# 3. 步聚1中最终将获得一个最长匹配, 若该location以 ^~ 标示，则立即结束匹配;
+# 4. 按先后顺序，进行正则匹配；
+# 5. 在4中，一旦有匹配，则立即停止匹配；
+# 6. 若4中没有任何一个匹配，则取出3中保存的那个最长的匹配；
+
+# to: uri结尾有一个/符号, @name等
+
+
+
+
+
 
 ###############################
 ## 完整的proxy.conf文件
