@@ -81,10 +81,16 @@ server{
 
 ## fastcgi设置
 server{
+   location / {
+      root /data/www;
+      # 设置默认页面，若文件存在,则进行内部重定向，再次匹配location
+      index index.html index.php; 
+   }
    location ~\.php$ {
       root /data/www;
       fastcgi_pass host:9000;  # php-fpm进程或其它fastcgi实现。
-      fastcgi_index index.php;
+      # $document_root 的值由 root配置指令设定，此处为/data/www
+      # $fastcgi_script_name 是访uri除去域名部分之后的地址，如/index.php
       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
       fastcgi_param QUERY_STRING $query_string;
       ... # 更多fastcgi_params的设置，在fastcgi_params.conf中(附在文末)
