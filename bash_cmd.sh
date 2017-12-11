@@ -101,11 +101,15 @@ kill -9 A_PID   # 发送代号表示的信号
 kill -HUP A_PID # 发送常量表示的信号 
 
 ## 常用信号表
-# 端终断开信号hang up,早期终端使用串行方式(如Modern连接),挂断后相应进程就没有输出终端了
+# HUP: hang up, 端终断开信号, 可捕获可忽略. 早期终端使用串行方式(如Modern连接),挂断后相应进程就没有输出终端了
 #     现在通常指虚拟终端，也有部分daemon守护进程因为不需要终端，会重新定义该信号的含义,
 #     比如httpd截获(intercept)该信号后就重新加载配置文件，相当于重启。
 (1) SIGHUP
+# INTERRUPT: 中断，可捕获可忽略
+#            通常由用户在终端中按下 Ctrl + C 发起，表示想结束此进程的运行，类传TERM的作用。
 (2) SIGINT
+# QUIT: 退出信号,可捕获(但进程仍会退出),并做一次内核转储(Core dump),将进程的关键信息的快照保存下来
+#       通常出用户终端按下 Ctrl + \ 发起
 (3) SIGQUIT
 (4) SIGILL
 (5) SIGTRAP
@@ -113,11 +117,13 @@ kill -HUP A_PID # 发送常量表示的信号
 (7) SIGBUS
 (8) SIGFPE
 (9) SIGKILL
-(10) SIGUSR1
+# USR1和USR2,用户自定义的信号，没有预先定义的含义
+(10) SIGUSR1 (12) SIGUSR2  
 (11) SIGSEGV
-(12) SIGUSR2
 (13) SIGPIPE
 (14) SIGALRM
+# TERM: termination, 结束信号, 可捕获可忽略，通知进程尽快结束。
+#       进程收到此信号后，可作一些最后善后工作，然后优雅离开。该信号与INT信号类似。 
 (15) SIGTERM
 (16) SIGSTKFLT
 (17) SIGCHLD
