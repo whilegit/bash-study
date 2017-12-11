@@ -27,6 +27,17 @@ http{
    ...
 }
 
+## server块的一般信息
+# 当一个请求到达服务器后，nginx将判定哪一个server块处理该请求。
+# 通常来说，一个server对应三元数组 [ip, socket, server_name], 当三者匹配上后，
+# 该server块就会服务于该次请求。
+server{ listen 80; server_name youdomain.com www.youdomain.com; ... } # 位于80端口的虚拟主机youdomain.com
+server{ listen 80 default_server; server_name youdomain.com; ... }    # 使用了default_server属性后，未匹配到host的请求将被发送到第一个server块
+server{ listen 80; server_name ""; return 444;} # 禁止请求头中Host不匹配的请求访问。加上本server块后，未匹配到host的请求将被禁止访问。
+server{ listen 192.168.0.11:80; server_name mydomain.com; ...} # 如果本机配置了多ip，则必须了提供ip地址
+# listen的默认值为 80, server_name的默认值为""
+
+
 # 静态资源处理,对于网页和图片等静态资源,可以直接定义如下的location
 #     如果一个server定义了多个location,则前缀最长的location胜出.
 #     如访问localhost/index.html 匹配/data/www/index.html
