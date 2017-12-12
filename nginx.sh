@@ -30,16 +30,30 @@ http{
 ## server块的一般信息
 # 当一个请求到达服务器后，nginx将判定哪一个server块处理该请求。
 # 通常来说，一个server对应三元数组 [ip, socket, server_name], 当三者匹配上后，该server块就会服务于该次请求。
-# listen的默认值为 80(单ip情况下), server_name的默认值为""
+# listen的默认值为 80(单ip情况下), server_name的默认值为"". 
+# 每一个端口，都会建立三个hash表，代表该端口所绑定的虚拟主机, 并且该端口可以设定一个默认虚拟主机。
+#     实际上，每个server可以监听多个端口.
+# server_name的匹配顺序:
+1. 精确名称，如找到则立即使用；
+2. 最长的形如 *.abc.example.org 类型的名称，如找到则立即使用；
+3. 最长的形如 example.* 类型的名称，如找到则立即使用
+4. 最先找到的那个正则匹配的名称
 
 # 位于80端口的虚拟主机youdomain.com
 server{ listen 80; server_name youdomain.com www.youdomain.com; ... } 
-# 使用了default_server属性后，未匹配到host的请求将被本server块处理，而不是发给第一个server块
+# 使用了default_server属性后(默认主机绑定到80端口)，未匹配到host的请求将被本server块处理，
+# 而不是发给第一个server块
 server{ listen 80 default_server; server_name youdomain.com; ... }    
 # 禁止请求头中Host不匹配的请求访问。加上本server块后，未匹配到host的请求将被禁止访问。
 server{ listen 80; server_name ""; return 444;} 
 # 如果本机配置了多ip，则必须了提供ip地址
 server{ listen 192.168.0.11:80; server_name mydomain.com; ...} 
+# 带通配符(wildcard)的域名
+server { listen 80; server_name *.example.org; ... } 
+server { listen 80; server_name mail.*; ... }  
+# 带正则表达式的server_name,附带?<user>捕捉,后续root指令可以使用$user表示捕捉到的值
+# 提示：如正则表达式里有{}符号,要把整个server_name后面的内容用引号括起来。
+server { listen 80; server_name ~^(?<user>.+)\.example\.net$; ... }
 
 
 # 静态资源处理,对于网页和图片等静态资源,可以直接定义如下的location
