@@ -53,3 +53,9 @@ mysql> grant select,update,insert on DBNAME.* to 'USERNAME'@'192.168.1.124' iden
 # 刷新权限表
 mysql> flush privileges;
 
+
+## 清理mysql-bin.000001之类的日志文件
+# mysql-bin.000001之类的文件主要用于主从同步和记录执行日志，如不需或占用大量的空间
+reset master; # 清理日志文件
+# 如后续仍不需要这类日志文件，可以在my.ini配置中注释掉 log-bin=mysql-bin
+
