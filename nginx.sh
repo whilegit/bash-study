@@ -3,7 +3,8 @@
 ## nginx启动后,可以接收几个命令
 nginx -s stop # fast shutdown 立即停止
 nginx -s quit # graceful shutdown 平稳关闭,各worker手头的请求会处理完
-nginx -s reload # 重新加载配置　
+nginx -s reload # 重新加载配置
+nginx -s reopen # 重新打开日志文件
 
 ## 日志通常在 /usr/local/nginx/logs或/var/log/nginx, 有access.log和error.log
 
@@ -129,11 +130,20 @@ location ~* url {} # 正则匹配(不区分大小写)
 # 4. 按先后顺序，进行正则匹配；
 # 5. 在4中，一旦有匹配，则立即停止匹配；
 # 6. 若4中没有任何一个匹配，则取出3中保存的那个最长的匹配；
+# 注：在前缀普通匹配中，字符串以/结尾，且后续是代理proxy相关的指令，如: location /user/ {} 
+#     a). 如$uri为 /user ,那么将会产生一个301重定向至 /user/ 
+#     b). 如不希望生产301重定向，那么应 再定义一个 location /user {..}块,里面的设置与 /user/ 块相关 
 
-# to: uri结尾有一个/符号, @name等
+location @name {} # 命名的location,不用于常规地址匹配，仅用于重定向(redirect)
 
-
-
+location /user {
+   # Syntax: try_files file ... uri; # 最后一个uri是内部重定向的去处
+   #         try_files file ... =code;  如try_files $uri =404;
+   try_files $uri @httpd; # 表示若未找到@uri,则内部重定向至@httpd这个命名的location
+   # 注意：一个location只能使用一个try_files指令
+   # 如果当前文件不存在，那么重定向至/images/default.gif(应有另一个location能够匹配这个重定向地址。)
+   try_files $uri /images/default.gif; 
+}
 
 
 
