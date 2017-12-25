@@ -53,6 +53,9 @@ mysql> grant select,update,insert on DBNAME.* to 'USERNAME'@'192.168.1.124' iden
 # 刷新权限表
 mysql> flush privileges;
 
+## 数据库导入导出
+mysqldump -u root -pPASSWORD DBNAME > /data/... # 数据库导出
+mysql -u root -pPASSWORD DBNAME < /data/...     # 数据库导入(DBNAME必须预先创建)
 
 ## 清理mysql-bin.000001之类的日志文件
 # mysql-bin.000001之类的文件主要用于主从同步和记录执行日志，如不需或占用大量的空间
