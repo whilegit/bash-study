@@ -116,7 +116,7 @@ mkfs.ext4 /dev/vdb1
 # 该文件记录当前已挂载的文件信息,每次mount/unmount命令后,都会修改此文件的相关内容.
 
 ## 临时挂载和卸载
-mount /dev/xxx /dest/dir # 第一次参数是设备号,第二个参数为目标目录(挂载点)
+mount /dev/xxx /dest/dir # 第一个参数是设备号,第二个参数为目标目录(挂载点)
 unmount -v /dev/xxx      # 通过设备号卸载, -v参数表示显示过程
 unmount -v /dest/dir     # 通过挂载点卸载
 
