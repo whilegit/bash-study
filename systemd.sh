@@ -152,7 +152,9 @@ systemctl list-unit-files --type=target
 systemctl list-dependencies multi-user.target
 
 ## 获取当前默认的Target
-systemctl get-default
+systemctl get-default # 获得当前的启动模式
+systemctl set-default graphical.target  # 更改启动模式为图形界面
+systemctl set-default multi-user.target # 更改启动模式为多用户命令行界面
 
 ## 更多关于Target的操作
 
