@@ -190,7 +190,7 @@ Context: http, server, location
 * 注意：__当开启了 sendfile 和 tcp_nopush 后，当发送文件时本选项(tcp-nodelay)将被忽略。__
 
 
-underscores_in_headers 是否允许客户端的请求域中使用下划线
+underscores\_in\_headers 是否允许客户端的请求域中使用下划线
 -----------------------------------------------------------
 ```
 Syntax:  underscores_in_headers on | off;
@@ -202,7 +202,7 @@ Context: http, server
 * 如果开启，那么请求头中有下划线的字段都将被舍弃。
 
 
-server_names_hash_bucket_size 设置 Server_name的哈希表大小?? 作用不是很明白
+server\_names\_hash\_bucket\_size 设置 Server_name的哈希表大小?? 作用不是很明白
 ----------------------------------------------------------
 ```
 Syntax:  server_names_hash_bucket_size size;
@@ -210,5 +210,245 @@ Default: server_names_hash_bucket_size 32|64|128;
 Context: http
 ```
 * Sets the bucket size of the server names hash tables. 
+
+
+keepalive_timeout  长连接超时设置
+------------------------------------------
+```
+Syntax:  keepalive_timeout timeout [header_timeout];
+Default: keepalive_timeout 75s;
+Context: http, server, location
+```
+* The first parameter sets a timeout during which a keep-alive client connection will stay open on the server side. The zero value disables keep-alive client connections. The optional second parameters sets a value in the `Keep-Alive: timeout=time` response header field. Two parameters may differ.
+
+
+client\_max\_body\_size 设置请求体的最大允许大小
+----------------------------------------------
+```
+Syntax:  client_max_body_size size;
+Default: client_max_body_size 1m;
+Context: http, server, location
+```
+* Sets the maximum allowed size of the client request body, specified in the "Content-Length" request header field. If the size in a request exceeds the configured value, the 413 (Request Entity Too Large) error is returned to the client. 
+
+
+client\_body\_buffer\_size 设置请求体内存缓冲区
+----------------------------------------------
+```
+Synatx:  client_body_buffer_size size;
+Default: client_body_buffer_size 8k|16k;
+Context: http, server, location
+```
+* Sets buffer size for reading client request body. In case the request body is larger than the buffer, the whole body or only its part is written to a temporary file. By default, buffer size if equal to two memory pages.  
+* 如果客户端的请求体大小超过 `client_body_buffer_size`设置，那么该请求体的部分或全部将被缓存到文件中，增加了一些I/O操作。
+
+
+listen 监听某个端口
+-------------------
+```
+Syntax:   listen address[:port] ....
+          listen port ....
+          listen unix:path ....
+Default:  listen *:80 | *:8000;
+Context:  server
+```
+* 在 server块中，设置 server块中监听的端口。
+
+
+server_name 设置虚拟主机名
+-------------------------
+```
+Syntax:  server_name name ...  
+Default: server_name "";
+Context: server
+```
+* Sets names of a virtual server. 
+
+	// 定义虚拟主机, 可以是多个, 第一个为 primary server name. 
+	server {
+		server_name example.com www.example.com;
+	}
+	
+	// 使用 *通配符代替最前面的部分 或 最后面的部分  
+	server {
+		server_name example.com *.example.com www.example.*
+	}
+	
+	// 最前面是一个点号
+	server {
+		server_name .example.com;   // 表示 example.com 和 *.example.com
+	}
+	
+	// 使用正则表达式, 前缀 ~ 表示这是一个正则表达式
+	server {
+		server_name www.example.com ~^www\d+\.example\.com$;
+	}
+	
+	// 正则表达式的捕捉(按顺序)  
+	server {
+		server_name ~^(www\.)?(.+)$; 
+		location / {
+			root /sites/$2;
+		}
+	}
+	
+	// 正则表达式的捕捉,并创建变量
+	server {
+		server_name ~^(www\.)?(?<domain>.+)$;
+		location / {
+			root /sites/$domain;
+		}
+	}
+	
+	/** server_name的匹配顺序 **/
+	1. the exact name
+	2. the longest wildcard name starting with an asterisk, e.g. "*.example.com"
+	3. the longest wildcard name ending with an asterisk, e.g. "mail.*"
+	4. the first matching regular expression (in order of appearance in the configuration file)
+	
+	
+root 设置根目录
+---------------
+```
+Syntax:  root path; 
+Default: root html;
+Context: http, server, location, if in location
+```
+* Sets the root directory for requests.
+	
+	// 以下设置, 请求地址 /i/top.gif时将发放 /data/w3/i/top.gif 文件给客户端。
+	location /i/ {
+		root /data/w3;
+	}
+	
+* `path`位置接受变量，但不可以为`$document_root` 和 `$realpath_root`这两个变量
+
+
+set 设置变量
+-----------
+```
+Syntax:  set $variable value;
+Default: ---
+Context: server, location, if
+```
+* Sets a `value` for the specified variable.
+
+
+if 条件语句
+-----------
+```
+Syntax:  if (condition) { ... }
+Default: ---
+Context: server, location
+```
+* 条件表达式
+	
+	// 大小写敏感的正则表达式测试
+	if ( $http_user_agent ~ MSIE) {
+		rewrite ^(.*)$ /msie/$1 break;
+	}
+	
+	// 大小写不敏感的正则表达式测试
+	if ( $http_cookie ~* "id=([^;]+)(?:;|$)" ) {
+		set $id $1
+	}
+	
+	// 测试字符串内容
+	if( $request_method = 'OPTIONS') {
+		add_header 'Access-Controller-Allow-Origin' *;
+	}
+	
+
+index 设置索引页 
+--------------------
+```
+Syntax:  index file ...
+Default: index index.html; 
+Context: http, server, location
+```
+* 实际上是在 __ngx_http_index_module__ 里定义.
+* The module processes requests ending with the slash character('/'). 
+* 处于结尾为/的请求，将产生一个内部重定向。
+* 最后一个文件可以是绝对路径。
+
+
+location 定义地址块
+-------------------------
+```
+Syntax:  location [ = | ~ | ~* | ^~ ] uri {...}
+Default: ---
+Context: server, location
+```
+* Sets configuration depending on a request URI. 根据 请求的uri，设置相应的配置。
+	
+	// 精确定义地址, 匹配到精确地址后立即使用它的配置，搜索立即终止(即不再匹配正则表达式)
+	location = / {
+		[ configuration A ]
+	}
+	
+	// 前缀地址: 
+	location / {
+		[ configuration B ]
+	}
+	
+	// 较长的前缀匹配
+	location /documents/ {
+		[ configuration C ]
+	}
+	
+	// 附终止行为的前缀匹配。
+	location ^~ /images/ {
+		[ configuration D ]
+	}
+	
+	// 正则匹配
+	location ~* \.(gif|jpg|jpeg)$ {
+		[ configuration E ]
+	}
+	
+	/** location 的匹配逻辑 **/
+    1. 先进行精确匹配，如有则立即使用该配置；
+    2. 然后进行全部的前缀匹配,记下最长的那个匹配；
+    3. 第2步中那个最长匹配附还终止条件(^~)，则立即使用该匹配; 
+    4. 进行正则匹配，直到有一个匹配成功为止；如有，则立即使用该匹配；
+    5. 如没有一个正则匹配成功，则使用第2步记录下来的那个匹配。
+    
+* 如果 uri前面加有 @ 符号，则这个是命名的地址块，可以被其它指令使用
+
+
+try_files 检查文件是否存在，并相应处理请求
+-----------------------------------------
+```
+Syntax:  try_files file ... uri; 
+         try_files file ... =code; 
+Default: --- 
+Context: server, location
+```
+* Checks the existence of files in the specified order and uses the first found file for request processing; the processing is performed in the current context. 
+
+    // 检查 $uri文件是否存在，如存在则使用之；如不存在，则返回 /images/default.gif
+	location /images/ {
+		try_files $uri /images/default.gif;
+	}
+	
+	// 最后一个 =404 表示实在找不到文件时，返回一个404状态码
+	location / {
+		try_files $uri $uri/index.html $uri.html =404;  
+	}
+	
+	// 转给其他地址块
+	location / {
+		try_files /systen/maintenance.html $uri $uri/index.html $uri.html @mongrel; 
+	}
+	location @mongrel {               // 定义一个叫mongrel的具名地址块
+		proxy_pass http://mongrel;     // 此于的 mongrel 定义在 upstream中
+	}
+
+
+
+
+
+
+
 
 
