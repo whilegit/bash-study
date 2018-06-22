@@ -33,6 +33,7 @@ set $(date)              # $(date)捕获的返回值将被设置进入$1,$2...$n
 
 ### shell交互时读取输入
 read val  # 将输入存入val变量中,如果直接按下回车键, val将读取到""空值,测试时应该用双引号括起来
+read -p "something to prompt user" val    # 提示用户输入内容，并赋值给变量val
 
 ### 变量求值
 foo=1

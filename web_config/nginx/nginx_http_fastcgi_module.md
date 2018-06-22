@@ -39,7 +39,14 @@ Context: http, server, location
 	fastcgi_param CONTENT_LENGTH $content_length;
 	
 	
-
+fastcgi_index 设置目录的索引页
+-----------------------------
+```
+Syntax:  fastcgi_index name;
+Default: ---
+Context: http, server, location
+```
+* Sets a file name that will be appended after a URI that ends with a slash, in the value of `fastcgi_script_name`. 
 
 
 fastcgi\_connect\_timeout 设置fastcgi的连接建立超时时间
@@ -50,6 +57,16 @@ Default: fastcgi_connect_timeout 60s;
 Context: http, server, location
 ```
 * Defines a timeout for establishing a connection with a FastCGI server. It should be noted that this timeout cannot usually exceed 75 seconds. 
+
+
+fastcgi\_keep\_conn  保持代理关系的长连接
+---------------------------------------
+```
+Syntax:  fastcgi_keep_conn  on | off;
+Default: fastcgi_keep_conn  off;
+Context: http, server, location
+```
+* By default, a FastCGI server will close a connection right after sending the response. However, when this directive is set to the value `on`, nginx will instruct a FastCGI server to keep connections open. 
 
 
 fastcgi\_send\_timeout 设置nginx向fastcgi服务器转发请求头时的一种超时

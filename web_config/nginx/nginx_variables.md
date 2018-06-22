@@ -19,6 +19,20 @@ $args 请求参数
 * arguments in the request line
 
 
+$document_root 由root或alias指令定义的value，通常为server块的根目录
+-----------------------------------------------------------------
+* `root` or `alias` directive's value for the current request. 
+
+
+$fastcgi\_script\_name  脚本路径(后半部分)
+-----------------------------------------
+* request URI or, if a URI ends with a slash, request URI with an index file name configured by the `fastcgi_index` directive appended to it. 
+	
+	fastcgi_index index.php;
+	fastcgi_param SCRIPT_FILENAME /home/www/php$fastcgi_script_name;
+    // 如果请求地址为 /info/，则SCRIPT_FILENAME=/home/www/php/info/index.php
+
+
 $remote_addr 客户端地址
 -----------------------------------------
 * `http_core_module` 引入，客户端的ip地址

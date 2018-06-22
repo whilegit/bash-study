@@ -21,6 +21,9 @@ id -g # 获取当前用户的gid,如要获取其它用户的gid,在命令后加�
 
 ## ssh远程登录命令
 ssh -l <username> host  # 如 ssh -l root remote_ip
+ssh root@10.0.0.1
+# 添加RSA公钥到远程服务器实现自动登陆
+ssh-copy-id root@10.0.0.1    # 输入密码后直接可以登陆了, 也可以在 ~/.ssh/authorized_keys 文件下追加 公钥文本
 
 # 将本地文件通过ssh上传至远程服务器(上传前不能登入远程服务器)
 # 如果本地是windows,可以安装git bash 集成的MINGW64模拟Linux环境
