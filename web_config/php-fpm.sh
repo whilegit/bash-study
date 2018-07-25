@@ -5,7 +5,7 @@
 # 运行php-fpm: 
 #    php编译成功后，php-fpm的可执行文件通常在 $prefix/sbin/php-fpm中
 #    其配置文件通常$prefix/etc/php-fpm.conf
-sbin/php-fpm -c etc/php-fpm.conf # 可启动php-fpm守护进程，使用netstat -ptln查看9000端口
+sbin/php-fpm -c etc/php.ini -y etc/php-fpm.conf # 可启动php-fpm守护进程，使用netstat -ptln查看9000端口
 # 继续配置nginx的fastcgi设置即可。
 
 

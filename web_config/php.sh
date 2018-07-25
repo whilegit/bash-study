@@ -37,7 +37,9 @@
 --enable-soap # soap模块,类似概念为web service
 --disable-debug # 编译时加入调试符号
 
-
-
-
 exit 0
+
+
+## php.ini 默认不导入 php/etc 目录，通常仍在 php 源码包的根目录下(分为 php.ini-develop 和 php.ini-production 两文件) 一起复制到 php/etc 的安装目录下。  
+## 在php.ini 中修改 extension_dir 设置，将扩展的路径修改为 /usr/local/php7_2_0/lib/php/extensions/no-debug-non-zts-20170718
+## 如果使用 php-fpm 管理 php 进行，则通常需要提供 php.ini 的路径 

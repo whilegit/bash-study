@@ -26,6 +26,6 @@ cat inputfile.txt | sed 's/hello/world/' - > outputfile.txt
 sed -i 's/Search/Replace' file.txt
 
 
-## 按行正则匹配 /Search:.*/ 并替换成 /Replace:\"$val\"/
+## 按行正则匹配 /Search:.*/ 并替换成 /Replace:$val"/, 注意：$val是变量
 sed -i "s/Search:.*/Replace:\"$val\"/" file.txt
 
