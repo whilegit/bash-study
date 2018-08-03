@@ -92,6 +92,9 @@ od -t x1 file_name
 xxd file_name
 hexdump -C file_name
 
+## 显示当前目录或文件的大小
+du -hs *     # 其中 -h 表示使用人类友好的表示，-s 表示总计
+
 ## 查看当前磁盘信息
 fdisk -l # 获取当前机器的磁盘信息,若新磁盘未挂载则此处不会显示
 df -h    # 该命令同时显示磁盘的使用情况
